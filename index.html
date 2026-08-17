@@ -1,0 +1,3342 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+
+<title>🇭🇰 香港旅遊共編</title>
+
+<meta name="theme-color" content="#e53935">
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --bg:#f5f7fb;
+  --card:#fff;
+  --text:#172033;
+  --muted:#7b8497;
+  --primary:#e53935;
+  --primary-dark:#c62828;
+  --line:#e8ebf1;
+  --green:#16a34a;
+  --blue:#2563eb;
+  --orange:#f59e0b;
+  --red:#dc2626;
+  --shadow:0 5px 20px rgba(20,30,50,.08);
+}
+
+html,
+body {
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "PingFang TC",
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    sans-serif;
+}
+
+body {
+  min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font:inherit;
+}
+
+button {
+  border:0;
+  cursor:pointer;
+}
+
+.app {
+  max-width:760px;
+  margin:auto;
+  padding-bottom:110px;
+}
+
+/* =========================
+   Header
+========================= */
+
+.header {
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--line);
+  padding:
+    calc(env(safe-area-inset-top) + 12px)
+    16px
+    12px;
+}
+
+.header-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.title {
+  font-size:23px;
+  font-weight:900;
+}
+
+.subtitle {
+  margin-top:3px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.sync {
+  font-size:12px;
+  color:var(--green);
+  white-space:nowrap;
+}
+
+.main-tabs {
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-top:12px;
+  scrollbar-width:none;
+}
+
+.main-tabs::-webkit-scrollbar {
+  display:none;
+}
+
+.main-tab {
+  flex:0 0 auto;
+  padding:9px 15px;
+  border-radius:999px;
+  background:#eef1f6;
+  color:#566074;
+  font-weight:800;
+}
+
+.main-tab.active {
+  background:var(--primary);
+  color:#fff;
+}
+
+.day-tabs {
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-top:9px;
+  scrollbar-width:none;
+}
+
+.day-tabs::-webkit-scrollbar {
+  display:none;
+}
+
+.day-tab {
+  flex:0 0 auto;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#f0f2f6;
+  color:#596275;
+  font-weight:700;
+  font-size:13px;
+}
+
+.day-tab.active {
+  background:#172033;
+  color:white;
+}
+
+/* =========================
+   Content
+========================= */
+
+.content {
+  padding:15px;
+}
+
+.day-title {
+  margin:5px 0 8px;
+  font-size:20px;
+  line-height:1.4;
+  font-weight:900;
+}
+
+.day-summary {
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+/* =========================
+   Timeline
+========================= */
+
+.timeline {
+  position:relative;
+}
+
+.timeline::before {
+  content:"";
+  position:absolute;
+  left:25px;
+  top:15px;
+  bottom:15px;
+  width:2px;
+  background:#e4e7ee;
+}
+
+.item {
+  position:relative;
+  display:grid;
+  grid-template-columns:51px 1fr;
+  gap:10px;
+  margin-bottom:13px;
+}
+
+.time {
+  position:relative;
+  z-index:2;
+  width:51px;
+  text-align:center;
+  padding-top:14px;
+  font-size:12px;
+  font-weight:800;
+  color:#5d6678;
+}
+
+.dot {
+  width:12px;
+  height:12px;
+  position:absolute;
+  right:-6px;
+  top:18px;
+  background:var(--primary);
+  border:3px solid var(--bg);
+  border-radius:50%;
+}
+
+.card {
+  background:var(--card);
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  padding:14px;
+  position:relative;
+  border:1px solid rgba(0,0,0,.02);
+}
+
+.card.completed {
+  opacity:.55;
+}
+
+.card.completed .place-name {
+  text-decoration:line-through;
+}
+
+.place-row {
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+}
+
+.place-name {
+  font-size:17px;
+  line-height:1.4;
+  font-weight:900;
+  flex:1;
+}
+
+.handle {
+  font-size:22px;
+  color:#a3a9b6;
+  padding:0 2px;
+  touch-action:none;
+}
+
+.meta {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:8px;
+}
+
+.badge {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:#f1f4f8;
+  color:#596275;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:12px;
+}
+
+.note {
+  margin-top:8px;
+  color:#687286;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.actions {
+  display:flex;
+  gap:7px;
+  margin-top:12px;
+}
+
+.action {
+  flex:1;
+  background:#f2f4f8;
+  color:#4c5669;
+  padding:9px 5px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.action.map {
+  color:#2563eb;
+  background:#edf4ff;
+}
+
+.action.delete {
+  color:#dc2626;
+  background:#fff0f0;
+}
+
+.action.done {
+  color:#16803a;
+  background:#edf9f0;
+}
+
+.sort-ghost {
+  opacity:.3;
+}
+
+/* =========================
+   Buttons
+========================= */
+
+.add-btn {
+  width:100%;
+  margin-top:4px;
+  padding:14px;
+  border-radius:15px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:900;
+  font-size:15px;
+  box-shadow:0 7px 20px rgba(229,57,53,.22);
+}
+
+.fab {
+  position:fixed;
+  z-index:30;
+  right:18px;
+  bottom:calc(20px + env(safe-area-inset-bottom));
+  width:57px;
+  height:57px;
+  border-radius:50%;
+  background:var(--primary);
+  color:white;
+  font-size:28px;
+  box-shadow:0 8px 25px rgba(229,57,53,.35);
+}
+
+/* =========================
+   Map
+========================= */
+
+.map-section {
+  margin-top:15px;
+  background:#fff;
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  padding:15px;
+}
+
+.map-title {
+  font-weight:900;
+  margin-bottom:9px;
+}
+
+.map-links {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.map-link {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:11px;
+  border-radius:11px;
+  background:#f5f7fa;
+  color:var(--text);
+  text-decoration:none;
+  font-size:13px;
+}
+
+/* =========================
+   Expense
+========================= */
+
+.expense-summary {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.summary-card {
+  background:white;
+  border-radius:16px;
+  padding:15px;
+  box-shadow:var(--shadow);
+}
+
+.summary-label {
+  color:var(--muted);
+  font-size:12px;
+}
+
+.summary-value {
+  margin-top:5px;
+  font-size:22px;
+  font-weight:900;
+}
+
+.summary-card.red .summary-value {
+  color:var(--primary);
+}
+
+.summary-card.blue .summary-value {
+  color:var(--blue);
+}
+
+.expense-card {
+  background:white;
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  padding:14px;
+  margin-bottom:12px;
+}
+
+.expense-row {
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.expense-icon {
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff1f1;
+  font-size:20px;
+}
+
+.expense-main {
+  flex:1;
+}
+
+.expense-name {
+  font-size:16px;
+  font-weight:900;
+}
+
+.expense-info {
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.expense-amount {
+  font-size:17px;
+  font-weight:900;
+  text-align:right;
+}
+
+.expense-actions {
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+}
+
+.expense-actions button {
+  flex:1;
+  padding:8px;
+  border-radius:9px;
+  background:#f2f4f8;
+  color:#4c5669;
+  font-size:12px;
+  font-weight:800;
+}
+
+.expense-actions .danger {
+  background:#fff0f0;
+  color:var(--red);
+}
+
+.expense-stats {
+  margin-top:15px;
+  background:white;
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  padding:15px;
+}
+
+.expense-stats-title {
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.stat-row {
+  display:flex;
+  justify-content:space-between;
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+
+.stat-row:last-child {
+  border-bottom:0;
+}
+
+/* =========================
+   Export
+========================= */
+
+.export-box {
+  margin-top:15px;
+  background:white;
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  padding:15px;
+}
+
+.export-title {
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.export-buttons {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.export-btn {
+  padding:12px;
+  border-radius:11px;
+  background:#172033;
+  color:white;
+  font-weight:800;
+}
+
+.export-btn.expense {
+  background:#2563eb;
+}
+
+/* =========================
+   Modal
+========================= */
+
+.modal-bg {
+  display:none;
+  position:fixed;
+  z-index:100;
+  inset:0;
+  background:rgba(0,0,0,.48);
+  padding:20px;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.modal-bg.show {
+  display:flex;
+}
+
+.modal {
+  width:100%;
+  max-width:600px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:white;
+  border-radius:22px 22px 0 0;
+  padding:20px;
+  padding-bottom:calc(20px + env(safe-area-inset-bottom));
+}
+
+.modal-title {
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:15px;
+}
+
+.form-group {
+  margin-bottom:13px;
+}
+
+.form-label {
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  font-weight:800;
+  color:#596275;
+}
+
+.form-control {
+  width:100%;
+  border:1px solid #dfe3eb;
+  border-radius:11px;
+  padding:11px 12px;
+  background:#fafbfc;
+  outline:none;
+}
+
+.form-control:focus {
+  border-color:var(--primary);
+  background:white;
+}
+
+.form-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.modal-actions {
+  display:flex;
+  gap:9px;
+  margin-top:18px;
+}
+
+.modal-btn {
+  flex:1;
+  padding:13px;
+  border-radius:12px;
+  font-weight:900;
+}
+
+.cancel {
+  background:#eef1f5;
+  color:#566074;
+}
+
+.save {
+  background:var(--primary);
+  color:white;
+}
+
+/* =========================
+   Loading / Empty
+========================= */
+
+.loading {
+  text-align:center;
+  padding:60px 20px;
+  color:var(--muted);
+}
+
+.empty {
+  text-align:center;
+  padding:35px 10px;
+  color:var(--muted);
+}
+
+/* =========================
+   Toast
+========================= */
+
+.toast {
+  position:fixed;
+  z-index:200;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%) translateY(15px);
+  background:#172033;
+  color:white;
+  padding:10px 15px;
+  border-radius:999px;
+  font-size:13px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  white-space:nowrap;
+}
+
+.toast.show {
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   Share
+========================= */
+
+.share-box {
+  margin-top:15px;
+  background:white;
+  border-radius:17px;
+  box-shadow:var(--shadow);
+  padding:15px;
+}
+
+.share-title {
+  font-weight:900;
+}
+
+.share-url {
+  margin-top:7px;
+  font-size:12px;
+  color:var(--muted);
+  word-break:break-all;
+}
+
+.share-btn {
+  margin-top:9px;
+  background:#172033;
+  color:white;
+  padding:9px 12px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:800;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+  <div class="header-row">
+
+    <div>
+      <div class="title">🇭🇰 香港旅遊</div>
+      <div class="subtitle">9/9～9/12・多人共編</div>
+    </div>
+
+    <div class="sync" id="syncStatus">
+      ● 連線中
+    </div>
+
+  </div>
+
+  <div class="main-tabs">
+
+    <button class="main-tab active" id="scheduleTab">
+      📅 行程
+    </button>
+
+    <button class="main-tab" id="expenseTab">
+      💰 費用
+    </button>
+
+  </div>
+
+  <div class="day-tabs" id="dayTabs"></div>
+
+</header>
+
+
+<main class="content">
+
+  <div id="content">
+    <div class="loading">
+      正在載入行程…
+    </div>
+  </div>
+
+</main>
+
+</div>
+
+
+<button class="fab" id="addBtn">
+  ＋
+</button>
+
+
+<div class="toast" id="toast"></div>
+
+
+<!-- =========================
+     行程 Modal
+========================= -->
+
+<div class="modal-bg" id="tripModal">
+
+  <div class="modal">
+
+    <div class="modal-title" id="tripModalTitle">
+      新增行程
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">日期</label>
+
+      <select class="form-control" id="fDay">
+
+        <option value="2026-09-09">9/9（三）</option>
+        <option value="2026-09-10">9/10（四）</option>
+        <option value="2026-09-11">9/11（五）</option>
+        <option value="2026-09-12">9/12（六）</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">景點／店家名稱</label>
+
+      <input
+        class="form-control"
+        id="fName"
+        placeholder="例如：香港迪士尼"
+      >
+
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label class="form-label">開始時間</label>
+
+        <input
+          type="time"
+          class="form-control"
+          id="fStart"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-label">結束時間</label>
+
+        <input
+          type="time"
+          class="form-control"
+          id="fEnd"
+        >
+
+      </div>
+
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label class="form-label">交通模式</label>
+
+        <select class="form-control" id="fTransport">
+
+          <option value="">無</option>
+          <option value="🚶 步行">🚶 步行</option>
+          <option value="🚇 MTR">🚇 MTR</option>
+          <option value="🚌 巴士">🚌 巴士</option>
+          <option value="🚋 叮叮車">🚋 叮叮車</option>
+          <option value="🚕 的士">🚕 的士</option>
+          <option value="🚗 開車">🚗 開車</option>
+          <option value="⛵ 船">⛵ 船</option>
+          <option value="✈️ 飛機">✈️ 飛機</option>
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-label">交通時間</label>
+
+        <input
+          class="form-control"
+          id="fTransportTime"
+          placeholder="例如：15 分鐘"
+        >
+
+      </div>
+
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">備註</label>
+
+      <textarea
+        class="form-control"
+        id="fNote"
+        rows="3"
+        placeholder="例如：依實際船班調整"
+      ></textarea>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="modal-btn cancel" id="cancelTripBtn">
+        取消
+      </button>
+
+      <button class="modal-btn save" id="saveTripBtn">
+        儲存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     費用 Modal
+========================= -->
+
+<div class="modal-bg" id="expenseModal">
+
+  <div class="modal">
+
+    <div class="modal-title" id="expenseModalTitle">
+      新增費用
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">日期</label>
+
+      <select class="form-control" id="eDay">
+
+        <option value="2026-09-09">9/9（三）</option>
+        <option value="2026-09-10">9/10（四）</option>
+        <option value="2026-09-11">9/11（五）</option>
+        <option value="2026-09-12">9/12（六）</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">費用項目</label>
+
+      <input
+        class="form-control"
+        id="eName"
+        placeholder="例如：迪士尼門票"
+      >
+
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label class="form-label">金額</label>
+
+        <input
+          type="number"
+          class="form-control"
+          id="eAmount"
+          placeholder="例如：639"
+          inputmode="decimal"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label class="form-label">幣別</label>
+
+        <select class="form-control" id="eCurrency">
+
+          <option value="HKD">HKD 港幣</option>
+          <option value="TWD">TWD 台幣</option>
+          <option value="USD">USD 美金</option>
+          <option value="JPY">JPY 日圓</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">付款人</label>
+
+      <input
+        class="form-control"
+        id="ePayer"
+        placeholder="例如：Kelly"
+      >
+
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">分類</label>
+
+      <select class="form-control" id="eCategory">
+
+        <option value="餐飲">🍜 餐飲</option>
+        <option value="交通">🚇 交通</option>
+        <option value="住宿">🏨 住宿</option>
+        <option value="門票">🎫 門票</option>
+        <option value="購物">🛍️ 購物</option>
+        <option value="娛樂">🎢 娛樂</option>
+        <option value="其他">📦 其他</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">備註</label>
+
+      <textarea
+        class="form-control"
+        id="eNote"
+        rows="3"
+        placeholder="備註"
+      ></textarea>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="modal-btn cancel" id="cancelExpenseBtn">
+        取消
+      </button>
+
+      <button class="modal-btn save" id="saveExpenseBtn">
+        儲存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.7/Sortable.min.js"></script>
+
+
+<script type="module">
+
+/* =========================================================
+   Firebase
+========================================================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInAnonymously,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  onSnapshot,
+  setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* =========================================================
+   Firebase 設定
+========================================================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBGBR0VsdGCK_BAKsWE1m2lIUoQYZ07U0Q",
+  authDomain: "hongkongtrip.firebaseapp.com",
+  projectId: "hongkongtrip",
+  storageBucket: "hongkongtrip.firebasestorage.app",
+  messagingSenderId: "278709336259",
+  appId: "1:278709336259:web:86bcb18312e72ac602ca76",
+  measurementId: "G-5GMBP3SX8Y"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+/* =========================================================
+   房間 ID
+========================================================= */
+
+const params = new URLSearchParams(location.search);
+
+let tripId = params.get("trip");
+
+if (!tripId) {
+
+  tripId =
+    "hk-" +
+    Math.random()
+      .toString(36)
+      .substring(2,10);
+
+  const newUrl =
+    location.origin +
+    location.pathname +
+    "?trip=" +
+    tripId;
+
+  history.replaceState({}, "", newUrl);
+
+}
+
+
+/* =========================================================
+   全域變數
+========================================================= */
+
+let currentUser = null;
+
+let currentDay = "2026-09-09";
+
+let currentPage = "schedule";
+
+let trips = {};
+
+let expenses = [];
+
+let editingTripId = null;
+
+let editingExpenseId = null;
+
+
+/* =========================================================
+   日期資料
+========================================================= */
+
+const dayInfo = {
+
+  "2026-09-09":
+    "9/9（三）｜抵港＋旺角美食＋叮叮車＋跑馬地賽馬",
+
+  "2026-09-10":
+    "9/10（四）｜迪士尼",
+
+  "2026-09-11":
+    "9/11（五）｜中環＋銅鑼灣＋尖沙咀＋張保仔號＋摩天輪",
+
+  "2026-09-12":
+    "9/12（六）｜九龍＋回台"
+
+};
+
+
+const dayNames = {
+
+  "2026-09-09":"9/9",
+
+  "2026-09-10":"9/10",
+
+  "2026-09-11":"9/11",
+
+  "2026-09-12":"9/12"
+
+};
+
+
+/* =========================================================
+   預設行程
+========================================================= */
+
+const scheduleText = `
+
+2026-09-09|08:00|11:30|✈️ 桃園機場 → 香港機場|✈️ 飛機|約 3 小時 30 分鐘|入境＋取行李約 30～45 分鐘
+2026-09-09|11:30|12:15|🍞 +Bread Bakery|🚌 A21＋🚶 步行|約 45～60 分鐘|
+2026-09-09|12:15|12:45|🍞 +Bread Bakery|||購買麵包
+2026-09-09|12:45|13:10|🏨 帝京酒店|🚶 步行|約 10～15 分鐘|+Bread Bakery → 帝京酒店
+2026-09-09|13:10|13:40|🏨 帝京酒店|||Check-in＋放行李
+2026-09-09|13:40|14:30|🥟 一點心|🚶 步行|約 10～15 分鐘|
+2026-09-09|14:30|15:00|🥤 喜茶|🚶 步行|約 10～15 分鐘|
+2026-09-09|15:00|15:30|🚇 旺角 → 銅鑼灣|🚇 MTR|約 20～25 分鐘|
+2026-09-09|15:30|16:15|🥐 Bake House・灣仔店|🚶 步行|約 5～10 分鐘|
+2026-09-09|16:15|16:45|🚋 叮叮車：銅鑼灣 → 跑馬地|🚋 叮叮車|約 15～20 分鐘|
+2026-09-09|16:45|17:15|🏇 跑馬地馬場|🚶 步行|約 10～15 分鐘|跑馬地電車站 → 跑馬地馬場
+2026-09-09|17:15|19:00|🏇 跑馬地馬場|||入場＋逛逛＋吃東西
+2026-09-09|19:00|21:30|🏇 跑馬地賽馬|||看幾場即可
+2026-09-09|21:30|22:10|🚇 跑馬地 → 帝京酒店|🚇 MTR|約 35～40 分鐘|
+
+2026-09-10|07:30|08:20|🏨 帝京酒店 → 香港迪士尼|🚇 MTR|約 45～50 分鐘|
+2026-09-10|08:20|09:00|🎫 香港迪士尼入口|🚶 步行|約 5～10 分鐘|
+2026-09-10|09:00|20:30|🎢 香港迪士尼一日遊||| 
+2026-09-10|20:30|21:20|🚇 香港迪士尼 → 帝京酒店|🚇 MTR|約 45～50 分鐘|
+
+2026-09-11|08:00|08:20|🏨 帝京酒店 → 祥記上海生煎包|🚇 MTR＋🚶 步行|約 20 分鐘|
+2026-09-11|08:20|09:10|🥟 祥記上海生煎包|||
+2026-09-11|09:10|09:25|🚶 祥記上海生煎包 → Vission Bakery|🚶 步行|約 10～15 分鐘|
+2026-09-11|09:25|10:15|🍰 Vission Bakery|||
+2026-09-11|10:15|10:35|🚇 前往中環|🚇 MTR|約 15～20 分鐘|
+2026-09-11|10:35|12:00|🏛️ 中環散步：石板街＋大館＋PMQ|🚶 步行|約 5～10 分鐘|
+2026-09-11|12:00|12:30|🚇 中環 → 銅鑼灣|🚇 MTR|約 10～15 分鐘|
+2026-09-11|12:30|13:20|🥐 Hashtag B・銅鑼灣店|||
+2026-09-11|13:20|13:35|🚶 Hashtag B → 義順牛奶公司|🚶 步行|約 5～10 分鐘|
+2026-09-11|13:35|14:20|🥛 義順牛奶公司|||
+2026-09-11|14:20|14:45|🚇 銅鑼灣 → 尖沙咀|🚇 MTR|約 15～20 分鐘|
+2026-09-11|14:45|15:25|🏮 錦綉唐朝|🚶 步行|約 5～10 分鐘|
+2026-09-11|15:25|16:25|🌃 鐘樓＋星光大道＋維港|🚶 步行|約 5～10 分鐘|
+2026-09-11|16:25|17:15|🌊 維港自由活動＋拍照|||
+2026-09-11|17:15|17:30|🚶 前往張保仔號碼頭|🚶 步行|約 5～10 分鐘|
+2026-09-11|17:30|18:15|⛵ 張保仔號|⛵ 船||依實際船班調整
+2026-09-11|18:15|18:40|🚶／🚇 張保仔號 → 香港摩天輪|🚶／🚇|約 25 分鐘|依實際下船位置調整
+2026-09-11|18:40|19:15|🎡 香港摩天輪|||約 15 分鐘一圈＋排隊／拍照
+2026-09-11|19:15|19:45|🍮 聰嫂甜品|🚶 步行|約 10～15 分鐘|
+2026-09-11|19:45|20:00|🚶 前往落日飛車上車處|🚶 步行|約 10～15 分鐘|
+2026-09-11|20:00|21:00|🚌 落日飛車|🚌 巴士|約 60 分鐘|
+2026-09-11|21:00|22:00|🍜 尖沙咀晚餐／自由活動|||
+2026-09-11|22:00|22:30|🚇 尖沙咀 → 帝京酒店|🚇 MTR|約 15～20 分鐘|
+
+2026-09-12|08:00|08:10|🏨 帝京酒店 → 華星冰室・旺角店|🚶 步行|約 10 分鐘|
+2026-09-12|08:10|09:10|🍳 華星冰室・旺角店|||
+2026-09-12|09:10|09:40|🚌 華星冰室 → 九龍寨城公園|🚌 巴士|約 20～30 分鐘|
+2026-09-12|09:40|11:20|🏯 九龍寨城公園|||
+2026-09-12|11:20|11:50|🚌 九龍寨城公園 → 旺角|🚌 巴士|約 20～30 分鐘|
+2026-09-12|11:50|12:50|🍖 棋子燒鵝・旺角店|||
+2026-09-12|12:50|13:05|🚶 棋子燒鵝 → 帝京酒店|🚶 步行|約 10～15 分鐘|
+2026-09-12|13:05|16:00|🏨 帝京酒店|||休息＋寄放行李
+2026-09-12|16:00|17:00|🚇 帝京酒店 → 香港機場|🚇 MTR＋機場快線|約 50～60 分鐘|
+2026-09-12|17:00|20:00|✈️ 香港機場|||報到＋安檢＋免稅店
+2026-09-12|20:00|21:00|✈️ 香港 → 台灣|✈️ 飛機||
+
+`;
+
+
+/* =========================================================
+   建立預設資料
+========================================================= */
+
+function buildInitialTrips() {
+
+  const result = {};
+
+  scheduleText
+    .trim()
+    .split("\n")
+    .map(x => x.trim())
+    .filter(Boolean)
+    .forEach((line,index) => {
+
+      const p = line.split("|");
+
+      const item = {
+
+        id:"d" + (index + 1),
+
+        day:p[0] || "",
+
+        start:p[1] || "",
+
+        end:p[2] || "",
+
+        name:p[3] || "",
+
+        transport:p[4] || "",
+
+        transportTime:p[5] || "",
+
+        note:p[6] || "",
+
+        completed:false
+
+      };
+
+      if (!result[item.day]) {
+        result[item.day] = [];
+      }
+
+      result[item.day].push(item);
+
+    });
+
+  return result;
+
+}
+
+
+/* =========================================================
+   工具
+========================================================= */
+
+function uid(prefix="item") {
+
+  return prefix +
+    "-" +
+    Date.now() +
+    "-" +
+    Math.random()
+      .toString(36)
+      .substring(2,7);
+
+}
+
+
+function esc(value) {
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function showToast(text) {
+
+  const el =
+    document.getElementById("toast");
+
+  el.textContent = text;
+
+  el.classList.add("show");
+
+  setTimeout(() => {
+
+    el.classList.remove("show");
+
+  },1800);
+
+}
+
+
+function formatMoney(amount) {
+
+  return Number(amount || 0)
+    .toLocaleString("zh-Hant-TW",{
+      maximumFractionDigits:2
+    });
+
+}
+
+
+/* =========================================================
+   Firebase 登入
+========================================================= */
+
+onAuthStateChanged(auth, user => {
+
+  if (user) {
+
+    currentUser = user;
+
+    document.getElementById("syncStatus")
+      .textContent = "● 已連線";
+
+    loadTrip();
+
+  }
+
+});
+
+
+signInAnonymously(auth)
+  .catch(error => {
+
+    console.error(error);
+
+    document.getElementById("syncStatus")
+      .textContent = "● 連線失敗";
+
+    alert(
+      "Firebase 匿名驗證失敗。\n\n" +
+      "請確認 Firebase → Authentication → 登入方式 → Anonymous 已啟用。"
+    );
+
+  });
+
+
+/* =========================================================
+   Firebase 讀取
+========================================================= */
+
+function loadTrip() {
+
+  const ref =
+    doc(db,"trips",tripId);
+
+  onSnapshot(
+    ref,
+    snapshot => {
+
+      if (!snapshot.exists()) {
+
+        trips =
+          buildInitialTrips();
+
+        expenses = [];
+
+        saveTrip();
+
+      } else {
+
+        const data =
+          snapshot.data();
+
+        trips =
+          data.trips || {};
+
+        expenses =
+          Array.isArray(data.expenses)
+            ? data.expenses
+            : [];
+
+        render();
+
+      }
+
+    },
+
+    error => {
+
+      console.error(error);
+
+      document.getElementById("syncStatus")
+        .textContent = "● 同步失敗";
+
+      showToast(
+        "資料同步失敗，請檢查 Firestore 規則"
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   Firebase 儲存
+========================================================= */
+
+async function saveTrip() {
+
+  if (!currentUser) {
+    return;
+  }
+
+  try {
+
+    const ref =
+      doc(db,"trips",tripId);
+
+    await setDoc(
+      ref,
+      {
+        trips,
+        expenses,
+        updatedAt:Date.now(),
+        updatedBy:currentUser.uid
+      },
+      {
+        merge:true
+      }
+    );
+
+    document.getElementById("syncStatus")
+      .textContent = "● 已同步";
+
+  } catch(error) {
+
+    console.error(error);
+
+    document.getElementById("syncStatus")
+      .textContent = "● 儲存失敗";
+
+    showToast("儲存失敗");
+
+  }
+
+}
+
+
+/* =========================================================
+   主頁切換
+========================================================= */
+
+document.getElementById("scheduleTab")
+  .onclick = () => {
+
+    currentPage = "schedule";
+
+    render();
+
+  };
+
+
+document.getElementById("expenseTab")
+  .onclick = () => {
+
+    currentPage = "expense";
+
+    render();
+
+  };
+
+
+/* =========================================================
+   Render
+========================================================= */
+
+function render() {
+
+  const scheduleTab =
+    document.getElementById("scheduleTab");
+
+  const expenseTab =
+    document.getElementById("expenseTab");
+
+  const dayTabs =
+    document.getElementById("dayTabs");
+
+  if (currentPage === "schedule") {
+
+    scheduleTab.classList.add("active");
+
+    expenseTab.classList.remove("active");
+
+    dayTabs.style.display = "flex";
+
+    renderDayTabs();
+
+    renderSchedule();
+
+    document.getElementById("addBtn")
+      .style.display = "block";
+
+  } else {
+
+    scheduleTab.classList.remove("active");
+
+    expenseTab.classList.add("active");
+
+    dayTabs.style.display = "none";
+
+    renderExpenses();
+
+    document.getElementById("addBtn")
+      .style.display = "block";
+
+  }
+
+}
+
+
+/* =========================================================
+   日期 Tabs
+========================================================= */
+
+function renderDayTabs() {
+
+  const tabs =
+    document.getElementById("dayTabs");
+
+  tabs.innerHTML =
+    Object.keys(dayNames)
+      .map(day => `
+
+        <button
+          class="day-tab ${day === currentDay ? "active":""}"
+          data-day="${day}"
+        >
+          ${dayNames[day]}
+        </button>
+
+      `)
+      .join("");
+
+  tabs
+    .querySelectorAll(".day-tab")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        currentDay =
+          btn.dataset.day;
+
+        render();
+
+      };
+
+    });
+
+}
+
+
+/* =========================================================
+   Render 行程
+========================================================= */
+
+function renderSchedule() {
+
+  const content =
+    document.getElementById("content");
+
+  const items =
+    trips[currentDay] || [];
+
+  let html = `
+
+    <div class="day-title">
+      ${esc(dayInfo[currentDay])}
+    </div>
+
+    <div class="day-summary">
+      共 ${items.length} 個行程・可拖曳 ⋮⋮ 調整順序
+    </div>
+
+    <div class="timeline" id="timeline">
+
+  `;
+
+
+  if (!items.length) {
+
+    html += `
+      <div class="empty">
+        今天還沒有行程
+      </div>
+    `;
+
+  }
+
+
+  items.forEach(item => {
+
+    html += renderItem(item);
+
+  });
+
+
+  html += `
+
+    </div>
+
+    <button class="add-btn" id="addDayBtn">
+      ＋ 新增今天的行程
+    </button>
+
+    <div class="map-section">
+
+      <div class="map-title">
+        🗺️ 今日地圖
+      </div>
+
+      <div class="map-links">
+
+        ${
+          items.length
+          ? items.map(item => {
+
+              const query =
+                item.name
+                  .replace(/^.{0,2}/,"");
+
+              return `
+
+                <a
+                  class="map-link"
+                  target="_blank"
+                  href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}"
+                >
+
+                  <span>
+                    ${esc(item.start)}
+                   　
+                    ${esc(item.name)}
+                  </span>
+
+                  <span>📍</span>
+
+                </a>
+
+              `;
+
+            }).join("")
+          : `<div class="empty">尚無景點</div>`
+        }
+
+      </div>
+
+    </div>
+
+
+    <div class="share-box">
+
+      <div class="share-title">
+        🔗 分享這個共編行程
+      </div>
+
+      <div class="share-url">
+        ${esc(location.href)}
+      </div>
+
+      <button
+        class="share-btn"
+        id="shareBtn"
+      >
+        📋 複製共編網址
+      </button>
+
+    </div>
+
+
+    <div class="export-box">
+
+      <div class="export-title">
+        📤 匯出
+      </div>
+
+      <div class="export-buttons">
+
+        <button
+          class="export-btn"
+          id="exportTripsBtn"
+        >
+          📅 匯出行程
+        </button>
+
+        <button
+          class="export-btn expense"
+          id="exportExpensesBtn"
+        >
+          💰 匯出費用
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  content.innerHTML = html;
+
+
+  document.getElementById("addDayBtn")
+    .onclick = () => openTripModal();
+
+
+  document.getElementById("shareBtn")
+    .onclick = shareUrl;
+
+
+  document.getElementById("exportTripsBtn")
+    .onclick = exportTrips;
+
+
+  document.getElementById("exportExpensesBtn")
+    .onclick = exportExpenses;
+
+
+  document
+    .querySelectorAll("[data-edit-trip]")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        openTripModal(
+          btn.dataset.editTrip
+        );
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll("[data-delete-trip]")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        deleteTrip(
+          btn.dataset.deleteTrip
+        );
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll("[data-done-trip]")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        toggleDone(
+          btn.dataset.doneTrip
+        );
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll("[data-up-trip]")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        moveItem(
+          btn.dataset.upTrip,
+          -1
+        );
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll("[data-down-trip]")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        moveItem(
+          btn.dataset.downTrip,
+          1
+        );
+
+      };
+
+    });
+
+
+  initSortable();
+
+}
+
+
+/* =========================================================
+   行程卡片
+========================================================= */
+
+function renderItem(item) {
+
+  const mapQuery =
+    item.name.replace(/^.{0,2}/,"");
+
+  return `
+
+    <div
+      class="item"
+      data-id="${esc(item.id)}"
+    >
+
+      <div class="time">
+
+        ${esc(item.start)}
+
+        <div class="dot"></div>
+
+      </div>
+
+      <div class="card ${
+        item.completed ? "completed":""
+      }">
+
+        <div class="place-row">
+
+          <div class="place-name">
+            ${esc(item.name)}
+          </div>
+
+          <div class="handle">
+            ⋮⋮
+          </div>
+
+        </div>
+
+
+        <div class="meta">
+
+          <span class="badge">
+            ⏰ ${esc(item.start)}
+            ${item.end ? "～" + esc(item.end):""}
+          </span>
+
+        </div>
+
+
+        ${
+          item.transport
+          ? `
+
+            <div class="meta">
+
+              <span class="badge">
+                ${esc(item.transport)}
+              </span>
+
+              ${
+                item.transportTime
+                ? `
+                  <span class="badge">
+                    ⏱️ ${esc(item.transportTime)}
+                  </span>
+                `
+                : ""
+              }
+
+            </div>
+
+          `
+          : ""
+        }
+
+
+        ${
+          item.note
+          ? `
+            <div class="note">
+              ${esc(item.note)}
+            </div>
+          `
+          : ""
+        }
+
+
+        <div class="actions">
+
+          <button
+            class="action map"
+            onclick="window.open(
+              'https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}',
+              '_blank'
+            )"
+          >
+            📍 地圖
+          </button>
+
+          <button
+            class="action done"
+            data-done-trip="${esc(item.id)}"
+          >
+            ${
+              item.completed
+              ? "↩️ 未完成"
+              : "✅ 完成"
+            }
+          </button>
+
+          <button
+            class="action"
+            data-edit-trip="${esc(item.id)}"
+          >
+            ✏️ 編輯
+          </button>
+
+          <button
+            class="action delete"
+            data-delete-trip="${esc(item.id)}"
+          >
+            🗑️
+          </button>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="action"
+            data-up-trip="${esc(item.id)}"
+          >
+            ⬆️ 上移
+          </button>
+
+          <button
+            class="action"
+            data-down-trip="${esc(item.id)}"
+          >
+            ⬇️ 下移
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   拖曳排序
+========================================================= */
+
+function initSortable() {
+
+  const list =
+    document.getElementById("timeline");
+
+  if (
+    !list ||
+    typeof Sortable === "undefined"
+  ) {
+    return;
+  }
+
+  new Sortable(
+    list,
+    {
+
+      animation:180,
+
+      handle:".handle",
+
+      delay:120,
+
+      delayOnTouchOnly:true,
+
+      touchStartThreshold:5,
+
+      ghostClass:"sort-ghost",
+
+      onEnd:async function() {
+
+        const ids =
+          [...list.querySelectorAll(".item")]
+            .map(el => el.dataset.id);
+
+        const old =
+          trips[currentDay] || [];
+
+        const map =
+          Object.fromEntries(
+            old.map(x => [x.id,x])
+          );
+
+        trips[currentDay] =
+          ids.map(id => map[id]);
+
+        render();
+
+        await saveTrip();
+
+        showToast("順序已同步");
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   上下移
+========================================================= */
+
+async function moveItem(id,direction) {
+
+  const list =
+    trips[currentDay] || [];
+
+  const index =
+    list.findIndex(x => x.id === id);
+
+  const newIndex =
+    index + direction;
+
+  if (
+    index < 0 ||
+    newIndex < 0 ||
+    newIndex >= list.length
+  ) {
+    return;
+  }
+
+  [
+    list[index],
+    list[newIndex]
+  ] =
+  [
+    list[newIndex],
+    list[index]
+  ];
+
+  trips[currentDay] = list;
+
+  render();
+
+  await saveTrip();
+
+}
+
+
+/* =========================================================
+   完成
+========================================================= */
+
+async function toggleDone(id) {
+
+  for (
+    const day of Object.keys(trips)
+  ) {
+
+    const item =
+      (trips[day] || [])
+        .find(x => x.id === id);
+
+    if (item) {
+
+      item.completed =
+        !item.completed;
+
+      break;
+
+    }
+
+  }
+
+  render();
+
+  await saveTrip();
+
+}
+
+
+/* =========================================================
+   刪除行程
+========================================================= */
+
+async function deleteTrip(id) {
+
+  if (
+    !confirm("確定要刪除這個行程嗎？")
+  ) {
+    return;
+  }
+
+  for (
+    const day of Object.keys(trips)
+  ) {
+
+    trips[day] =
+      (trips[day] || [])
+        .filter(x => x.id !== id);
+
+  }
+
+  render();
+
+  await saveTrip();
+
+  showToast("行程已刪除");
+
+}
+
+
+/* =========================================================
+   行程 Modal
+========================================================= */
+
+function openTripModal(id=null) {
+
+  editingTripId = id;
+
+  const modal =
+    document.getElementById("tripModal");
+
+  modal.classList.add("show");
+
+
+  if (id) {
+
+    let item = null;
+
+    for (
+      const day of Object.keys(trips)
+    ) {
+
+      item =
+        (trips[day] || [])
+          .find(x => x.id === id);
+
+      if (item) break;
+
+    }
+
+    if (!item) return;
+
+    document.getElementById("tripModalTitle")
+      .textContent = "編輯行程";
+
+    document.getElementById("fDay")
+      .value = item.day;
+
+    document.getElementById("fName")
+      .value = item.name;
+
+    document.getElementById("fStart")
+      .value = item.start;
+
+    document.getElementById("fEnd")
+      .value = item.end || "";
+
+    document.getElementById("fTransport")
+      .value = item.transport || "";
+
+    document.getElementById("fTransportTime")
+      .value = item.transportTime || "";
+
+    document.getElementById("fNote")
+      .value = item.note || "";
+
+  } else {
+
+    document.getElementById("tripModalTitle")
+      .textContent = "新增行程";
+
+    document.getElementById("fDay")
+      .value = currentDay;
+
+    document.getElementById("fName")
+      .value = "";
+
+    document.getElementById("fStart")
+      .value = "";
+
+    document.getElementById("fEnd")
+      .value = "";
+
+    document.getElementById("fTransport")
+      .value = "";
+
+    document.getElementById("fTransportTime")
+      .value = "";
+
+    document.getElementById("fNote")
+      .value = "";
+
+  }
+
+}
+
+
+function closeTripModal() {
+
+  document
+    .getElementById("tripModal")
+    .classList.remove("show");
+
+  editingTripId = null;
+
+}
+
+
+document.getElementById("cancelTripBtn")
+  .onclick = closeTripModal;
+
+
+document.getElementById("tripModal")
+  .onclick = e => {
+
+    if (
+      e.target.id === "tripModal"
+    ) {
+      closeTripModal();
+    }
+
+  };
+
+
+/* =========================================================
+   儲存行程
+========================================================= */
+
+document.getElementById("saveTripBtn")
+  .onclick = async () => {
+
+    const day =
+      document.getElementById("fDay").value;
+
+    const name =
+      document.getElementById("fName")
+        .value.trim();
+
+    const start =
+      document.getElementById("fStart").value;
+
+    const end =
+      document.getElementById("fEnd").value;
+
+    const transport =
+      document.getElementById("fTransport").value;
+
+    const transportTime =
+      document.getElementById("fTransportTime")
+        .value.trim();
+
+    const note =
+      document.getElementById("fNote")
+        .value.trim();
+
+
+    if (!name) {
+
+      alert("請輸入景點名稱");
+
+      return;
+
+    }
+
+
+    if (!trips[day]) {
+
+      trips[day] = [];
+
+    }
+
+
+    if (editingTripId) {
+
+      let oldItem = null;
+
+      for (
+        const d of Object.keys(trips)
+      ) {
+
+        const index =
+          trips[d].findIndex(
+            x => x.id === editingTripId
+          );
+
+        if (index >= 0) {
+
+          oldItem =
+            trips[d][index];
+
+          trips[d].splice(index,1);
+
+          break;
+
+        }
+
+      }
+
+
+      trips[day].push({
+
+        ...oldItem,
+
+        day,
+        name,
+        start,
+        end,
+        transport,
+        transportTime,
+        note
+
+      });
+
+    } else {
+
+      trips[day].push({
+
+        id:uid("trip"),
+
+        day,
+
+        start,
+
+        end,
+
+        name,
+
+        transport,
+
+        transportTime,
+
+        note,
+
+        completed:false
+
+      });
+
+    }
+
+
+    closeTripModal();
+
+    currentDay = day;
+
+    render();
+
+    await saveTrip();
+
+    showToast("行程已儲存");
+
+  };
+
+
+/* =========================================================
+   費用頁
+========================================================= */
+
+function renderExpenses() {
+
+  const content =
+    document.getElementById("content");
+
+  const totals = {};
+
+  expenses.forEach(e => {
+
+    const currency =
+      e.currency || "HKD";
+
+    totals[currency] =
+      (totals[currency] || 0) +
+      Number(e.amount || 0);
+
+  });
+
+
+  let summaryHTML = "";
+
+  const currencies =
+    Object.keys(totals);
+
+  if (!currencies.length) {
+
+    summaryHTML = `
+
+      <div class="summary-card red">
+
+        <div class="summary-label">
+          目前費用
+        </div>
+
+        <div class="summary-value">
+          尚無
+        </div>
+
+      </div>
+
+    `;
+
+  } else {
+
+    summaryHTML =
+      currencies.map((currency,index) => `
+
+        <div class="summary-card ${
+          index % 2 === 0
+          ? "red"
+          : "blue"
+        }">
+
+          <div class="summary-label">
+            ${esc(currency)} 總計
+          </div>
+
+          <div class="summary-value">
+            ${formatMoney(totals[currency])}
+          </div>
+
+        </div>
+
+      `).join("");
+
+  }
+
+
+  let html = `
+
+    <div class="day-title">
+      💰 旅遊費用
+    </div>
+
+    <div class="day-summary">
+      共 ${expenses.length} 筆費用
+    </div>
+
+    <div class="expense-summary">
+      ${summaryHTML}
+    </div>
+
+    <button
+      class="add-btn"
+      id="addExpenseBtn"
+    >
+      ＋ 新增費用
+    </button>
+
+  `;
+
+
+  if (!expenses.length) {
+
+    html += `
+
+      <div class="empty">
+        目前還沒有費用
+      </div>
+
+    `;
+
+  } else {
+
+    const sorted =
+      [...expenses]
+        .sort((a,b) =>
+          String(a.day)
+            .localeCompare(String(b.day))
+        );
+
+
+    sorted.forEach(expense => {
+
+      html += renderExpense(expense);
+
+    });
+
+  }
+
+
+  html += `
+
+    <div class="expense-stats">
+
+      <div class="expense-stats-title">
+        👤 付款人統計
+      </div>
+
+      ${renderPayerStats()}
+
+    </div>
+
+
+    <div class="export-box">
+
+      <div class="export-title">
+        📤 匯出
+      </div>
+
+      <div class="export-buttons">
+
+        <button
+          class="export-btn"
+          id="exportTripsBtn"
+        >
+          📅 匯出行程
+        </button>
+
+        <button
+          class="export-btn expense"
+          id="exportExpensesBtn"
+        >
+          💰 匯出費用
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="share-box">
+
+      <div class="share-title">
+        🔗 分享這個共編行程
+      </div>
+
+      <div class="share-url">
+        ${esc(location.href)}
+      </div>
+
+      <button
+        class="share-btn"
+        id="shareBtn"
+      >
+        📋 複製共編網址
+      </button>
+
+    </div>
+
+  `;
+
+
+  content.innerHTML = html;
+
+
+  document.getElementById("addExpenseBtn")
+    .onclick = () => openExpenseModal();
+
+
+  document.getElementById("exportTripsBtn")
+    .onclick = exportTrips;
+
+
+  document.getElementById("exportExpensesBtn")
+    .onclick = exportExpenses;
+
+
+  document.getElementById("shareBtn")
+    .onclick = shareUrl;
+
+
+  document
+    .querySelectorAll("[data-edit-expense]")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        openExpenseModal(
+          btn.dataset.editExpense
+        );
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll("[data-delete-expense]")
+    .forEach(btn => {
+
+      btn.onclick = () => {
+
+        deleteExpense(
+          btn.dataset.deleteExpense
+        );
+
+      };
+
+    });
+
+}
+
+
+/* =========================================================
+   費用卡片
+========================================================= */
+
+function renderExpense(expense) {
+
+  const icons = {
+
+    "餐飲":"🍜",
+
+    "交通":"🚇",
+
+    "住宿":"🏨",
+
+    "門票":"🎫",
+
+    "購物":"🛍️",
+
+    "娛樂":"🎢",
+
+    "其他":"📦"
+
+  };
+
+
+  return `
+
+    <div class="expense-card">
+
+      <div class="expense-row">
+
+        <div class="expense-icon">
+          ${icons[expense.category] || "📦"}
+        </div>
+
+        <div class="expense-main">
+
+          <div class="expense-name">
+            ${esc(expense.name)}
+          </div>
+
+          <div class="expense-info">
+
+            ${esc(dayNames[expense.day] || expense.day)}
+            ・
+            ${esc(expense.category || "其他")}
+
+            <br>
+
+            付款人：
+            ${esc(expense.payer || "未填寫")}
+
+            ${
+              expense.note
+              ? `<br>${esc(expense.note)}`
+              : ""
+            }
+
+          </div>
+
+        </div>
+
+        <div class="expense-amount">
+
+          ${formatMoney(expense.amount)}
+
+          <div style="
+            font-size:11px;
+            color:#7b8497;
+            margin-top:3px;
+          ">
+            ${esc(expense.currency || "HKD")}
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="expense-actions">
+
+        <button
+          data-edit-expense="${esc(expense.id)}"
+        >
+          ✏️ 編輯
+        </button>
+
+        <button
+          class="danger"
+          data-delete-expense="${esc(expense.id)}"
+        >
+          🗑️ 刪除
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   付款人統計
+========================================================= */
+
+function renderPayerStats() {
+
+  if (!expenses.length) {
+
+    return `
+      <div class="empty">
+        尚無付款資料
+      </div>
+    `;
+
+  }
+
+
+  const stats = {};
+
+
+  expenses.forEach(e => {
+
+    const payer =
+      e.payer || "未填寫";
+
+    const currency =
+      e.currency || "HKD";
+
+    if (!stats[payer]) {
+      stats[payer] = {};
+    }
+
+    stats[payer][currency] =
+      (stats[payer][currency] || 0) +
+      Number(e.amount || 0);
+
+  });
+
+
+  return Object.keys(stats)
+    .map(payer => {
+
+      const amounts =
+        Object.keys(stats[payer])
+          .map(currency =>
+            `${currency} ${formatMoney(stats[payer][currency])}`
+          )
+          .join("　");
+
+      return `
+
+        <div class="stat-row">
+
+          <span>
+            👤 ${esc(payer)}
+          </span>
+
+          <strong>
+            ${amounts}
+          </strong>
+
+        </div>
+
+      `;
+
+    })
+    .join("");
+
+}
+
+
+/* =========================================================
+   費用 Modal
+========================================================= */
+
+function openExpenseModal(id=null) {
+
+  editingExpenseId = id;
+
+  const modal =
+    document.getElementById("expenseModal");
+
+  modal.classList.add("show");
+
+
+  if (id) {
+
+    const expense =
+      expenses.find(
+        x => x.id === id
+      );
+
+    if (!expense) return;
+
+
+    document.getElementById("expenseModalTitle")
+      .textContent = "編輯費用";
+
+    document.getElementById("eDay")
+      .value = expense.day;
+
+    document.getElementById("eName")
+      .value = expense.name;
+
+    document.getElementById("eAmount")
+      .value = expense.amount;
+
+    document.getElementById("eCurrency")
+      .value = expense.currency || "HKD";
+
+    document.getElementById("ePayer")
+      .value = expense.payer || "";
+
+    document.getElementById("eCategory")
+      .value = expense.category || "其他";
+
+    document.getElementById("eNote")
+      .value = expense.note || "";
+
+  } else {
+
+    document.getElementById("expenseModalTitle")
+      .textContent = "新增費用";
+
+    document.getElementById("eDay")
+      .value = currentDay;
+
+    document.getElementById("eName")
+      .value = "";
+
+    document.getElementById("eAmount")
+      .value = "";
+
+    document.getElementById("eCurrency")
+      .value = "HKD";
+
+    document.getElementById("ePayer")
+      .value = "";
+
+    document.getElementById("eCategory")
+      .value = "餐飲";
+
+    document.getElementById("eNote")
+      .value = "";
+
+  }
+
+}
+
+
+function closeExpenseModal() {
+
+  document
+    .getElementById("expenseModal")
+    .classList.remove("show");
+
+  editingExpenseId = null;
+
+}
+
+
+document.getElementById("cancelExpenseBtn")
+  .onclick = closeExpenseModal;
+
+
+document.getElementById("expenseModal")
+  .onclick = e => {
+
+    if (
+      e.target.id === "expenseModal"
+    ) {
+      closeExpenseModal();
+    }
+
+  };
+
+
+/* =========================================================
+   儲存費用
+========================================================= */
+
+document.getElementById("saveExpenseBtn")
+  .onclick = async () => {
+
+    const day =
+      document.getElementById("eDay").value;
+
+    const name =
+      document.getElementById("eName")
+        .value.trim();
+
+    const amount =
+      Number(
+        document.getElementById("eAmount").value
+      );
+
+    const currency =
+      document.getElementById("eCurrency").value;
+
+    const payer =
+      document.getElementById("ePayer")
+        .value.trim();
+
+    const category =
+      document.getElementById("eCategory").value;
+
+    const note =
+      document.getElementById("eNote")
+        .value.trim();
+
+
+    if (!name) {
+
+      alert("請輸入費用項目");
+
+      return;
+
+    }
+
+
+    if (
+      !amount ||
+      amount < 0
+    ) {
+
+      alert("請輸入正確金額");
+
+      return;
+
+    }
+
+
+    if (editingExpenseId) {
+
+      const index =
+        expenses.findIndex(
+          x => x.id === editingExpenseId
+        );
+
+      if (index >= 0) {
+
+        expenses[index] = {
+
+          ...expenses[index],
+
+          day,
+
+          name,
+
+          amount,
+
+          currency,
+
+          payer,
+
+          category,
+
+          note
+
+        };
+
+      }
+
+    } else {
+
+      expenses.push({
+
+        id:uid("expense"),
+
+        day,
+
+        name,
+
+        amount,
+
+        currency,
+
+        payer,
+
+        category,
+
+        note
+
+      });
+
+    }
+
+
+    closeExpenseModal();
+
+    currentPage = "expense";
+
+    render();
+
+    await saveTrip();
+
+    showToast("費用已儲存");
+
+  };
+
+
+/* =========================================================
+   刪除費用
+========================================================= */
+
+async function deleteExpense(id) {
+
+  if (
+    !confirm("確定要刪除這筆費用嗎？")
+  ) {
+    return;
+  }
+
+  expenses =
+    expenses.filter(
+      x => x.id !== id
+    );
+
+  render();
+
+  await saveTrip();
+
+  showToast("費用已刪除");
+
+}
+
+
+/* =========================================================
+   FAB
+========================================================= */
+
+document.getElementById("addBtn")
+  .onclick = () => {
+
+    if (currentPage === "schedule") {
+
+      openTripModal();
+
+    } else {
+
+      openExpenseModal();
+
+    }
+
+  };
+
+
+/* =========================================================
+   分享網址
+========================================================= */
+
+async function shareUrl() {
+
+  const url =
+    location.href;
+
+  try {
+
+    if (
+      navigator.share
+    ) {
+
+      await navigator.share({
+
+        title:"🇭🇰 香港旅遊共編",
+
+        text:"一起編輯香港旅遊行程",
+
+        url
+
+      });
+
+    } else {
+
+      await navigator.clipboard
+        .writeText(url);
+
+      showToast(
+        "共編網址已複製"
+      );
+
+    }
+
+  } catch(error) {
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* =========================================================
+   CSV 匯出
+========================================================= */
+
+function downloadCSV(
+  filename,
+  rows
+) {
+
+  const csv =
+    rows
+      .map(row =>
+        row.map(value => {
+
+          const text =
+            String(value ?? "");
+
+          return '"' +
+            text.replaceAll('"','""') +
+            '"';
+
+        }).join(",")
+      )
+      .join("\r\n");
+
+
+  /*
+    UTF-8 BOM
+    讓 Excel 正確顯示繁體中文
+  */
+
+  const blob =
+    new Blob(
+      ["\uFEFF" + csv],
+      {
+        type:"text/csv;charset=utf-8;"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download = filename;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   匯出行程
+========================================================= */
+
+function exportTrips() {
+
+  const rows = [
+
+    [
+      "日期",
+      "開始時間",
+      "結束時間",
+      "行程",
+      "交通模式",
+      "交通時間",
+      "備註",
+      "完成"
+    ]
+
+  ];
+
+
+  Object.keys(dayNames)
+    .forEach(day => {
+
+      (trips[day] || [])
+        .forEach(item => {
+
+          rows.push([
+
+            dayNames[day],
+
+            item.start,
+
+            item.end,
+
+            item.name,
+
+            item.transport,
+
+            item.transportTime,
+
+            item.note,
+
+            item.completed
+              ? "已完成"
+              : "未完成"
+
+          ]);
+
+        });
+
+    });
+
+
+  downloadCSV(
+    "香港旅遊_行程.csv",
+    rows
+  );
+
+  showToast("行程 CSV 已匯出");
+
+}
+
+
+/* =========================================================
+   匯出費用
+========================================================= */
+
+function exportExpenses() {
+
+  const rows = [
+
+    [
+      "日期",
+      "費用項目",
+      "金額",
+      "幣別",
+      "付款人",
+      "分類",
+      "備註"
+    ]
+
+  ];
+
+
+  [...expenses]
+    .sort((a,b) =>
+      String(a.day)
+        .localeCompare(String(b.day))
+    )
+    .forEach(expense => {
+
+      rows.push([
+
+        dayNames[expense.day] ||
+          expense.day,
+
+        expense.name,
+
+        expense.amount,
+
+        expense.currency,
+
+        expense.payer,
+
+        expense.category,
+
+        expense.note
+
+      ]);
+
+    });
+
+
+  downloadCSV(
+    "香港旅遊_費用.csv",
+    rows
+  );
+
+  showToast("費用 CSV 已匯出");
+
+}
+
+
+</script>
+
+</body>
+</html>
